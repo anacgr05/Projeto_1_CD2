@@ -4,3 +4,8 @@ pydantic
 pydantic-settings
 pytest
 httpx
+numpy
+joblib
+huggingface_hub
+black
+autoflake

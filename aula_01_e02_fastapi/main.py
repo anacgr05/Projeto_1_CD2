@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from config import settings
-from routers import pratos, bebidas, pedidos, reservas
+from routers import pratos, bebidas, pedidos, reservas, ml
 
 app = FastAPI(
     title=settings.app_name,
@@ -49,6 +49,7 @@ app.include_router(pratos.router, prefix="/pratos", tags=["Pratos"])
 app.include_router(bebidas.router, prefix="/bebidas", tags=["Bebidas"])
 app.include_router(pedidos.router, prefix="/pedidos", tags=["Pedidos"])
 app.include_router(reservas.router, prefix="/reservas", tags=["Reservas"])
+app.include_router(ml.router, prefix="/ml", tags=["ML"])
 
 
 @app.get("/", tags=["Geral"])
