@@ -95,11 +95,17 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
       - name: Verificar autenticação com Hugging Face
-        run: python -c "import os; assert os.environ.get('HF_TOKEN'), 'HF_TOKEN não configurado'"
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "⚠️  HF_TOKEN não definido - testes de integração serão pulados"
+            exit 0
+          fi
+          python -c "import os; assert os.environ.get('HF_TOKEN'), 'HF_TOKEN não configurado'"
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
       - name: Rodar testes de integração
+        if: env.HF_TOKEN != ''
         run: |
           cd aula_01_e02_fastapi
           pytest tests/test_modelo.py -m integracao -v --tb=short
