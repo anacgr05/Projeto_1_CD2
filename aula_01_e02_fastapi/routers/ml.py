@@ -19,10 +19,7 @@ def get_model():
     global _model
 
     if _model is None:
-        _model = load_model(
-            repo_id=MODEL_REPO_ID,
-            filename=MODEL_FILENAME
-        )
+        _model = load_model(repo_id=MODEL_REPO_ID, filename=MODEL_FILENAME)
     return _model
 
 
@@ -48,13 +45,18 @@ async def predict(input_data: PredictInput):
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"Modelo indisponível: {e}")
 
-    features = np.array([[
-        input_data.valor_transacao,
-        input_data.hora_transacao,
-        input_data.distancia_ultima_compra,
-        input_data.tentativas_senha,
-        input_data.pais_diferente
-    ]], dtype=float)
+    features = np.array(
+        [
+            [
+                input_data.valor_transacao,
+                input_data.hora_transacao,
+                input_data.distancia_ultima_compra,
+                input_data.tentativas_senha,
+                input_data.pais_diferente,
+            ]
+        ],
+        dtype=float,
+    )
 
     prediction = int(model.predict(features)[0])
     probability = float(model.predict_proba(features)[0][1])
@@ -64,7 +66,7 @@ async def predict(input_data: PredictInput):
         prediction=prediction,
         probability=round(probability, 4),
         label=label,
-        model_version=MODEL_REPO_ID
+        model_version=MODEL_REPO_ID,
     )
 
 
@@ -75,18 +77,10 @@ async def health():
         test_input = np.zeros((1, 5))
         model.predict(test_input)
 
-        return {
-            "api": "ok",
-            "model": "ok",
-            "model_repo": MODEL_REPO_ID
-        }
+        return {"api": "ok", "model": "ok", "model_repo": MODEL_REPO_ID}
 
     except Exception as e:
         return JSONResponse(
             status_code=503,
-            content={
-                "api": "ok",
-                "model": "degraded",
-                "model_repo": str(e)
-            }
+            content={"api": "ok", "model": "degraded", "model_repo": str(e)},
         )

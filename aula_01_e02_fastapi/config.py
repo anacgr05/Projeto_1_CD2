@@ -9,10 +9,7 @@ class Settings(BaseSettings):
     max_mesas: int = 20
     max_pessoas_por_mesa: int = 10
 
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8"
-    )
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 settings = Settings()

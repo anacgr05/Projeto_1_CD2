@@ -16,7 +16,9 @@ class ReservaInput(BaseModel):
     def deve_ser_futura(cls, v):
         agora = datetime.now(tz=v.tzinfo)
         if (v - agora).total_seconds() < 3600:
-            raise ValueError("Reserva deve ser feita com pelo menos 1 hora de antecedência")
+            raise ValueError(
+                "Reserva deve ser feita com pelo menos 1 hora de antecedência"
+            )
         return v
 
 

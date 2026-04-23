@@ -9,7 +9,7 @@ app = FastAPI(
     title=settings.app_name,
     description=settings.app_description,
     version=settings.app_version,
-    debug=settings.debug
+    debug=settings.debug,
 )
 
 
@@ -24,11 +24,11 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             "detalhes": [
                 {
                     "campo": " -> ".join(str(loc) for loc in e["loc"]),
-                    "mensagem": e["msg"]
+                    "mensagem": e["msg"],
                 }
                 for e in exc.errors()
-            ]
-        }
+            ],
+        },
     )
 
 
@@ -40,8 +40,8 @@ async def http_exception_handler(request: Request, exc: HTTPException):
             "erro": exc.detail,
             "status": exc.status_code,
             "path": str(request.url),
-            "detalhes": []
-        }
+            "detalhes": [],
+        },
     )
 
 
@@ -57,5 +57,5 @@ async def root():
     return {
         "restaurante": "Bella Tavola",
         "mensagem": "Bem-vindo à API do Bella Tavola",
-        "versao": settings.app_version
+        "versao": settings.app_version,
     }

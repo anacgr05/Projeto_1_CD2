@@ -12,6 +12,7 @@ def modelo():
     Carrega o modelo uma única vez para todos os testes deste módulo.
     """
     from model_utils import load_model
+
     return load_model(REPO_ID)
 
 
@@ -28,7 +29,7 @@ PAYLOAD_VALIDO = {
     "hora_transacao": 14,
     "distancia_ultima_compra": 5.0,
     "tentativas_senha": 1,
-    "pais_diferente": 0
+    "pais_diferente": 0,
 }
 
 
@@ -112,12 +113,15 @@ def test_predict_sem_campo_obrigatorio_retorna_422(client):
 
 
 @pytest.mark.integracao
-@pytest.mark.parametrize("campo,valor_invalido", [
-    ("hora_transacao", 25),
-    ("hora_transacao", -1),
-    ("tentativas_senha", 0),
-    ("valor_transacao", -50.0),
-])
+@pytest.mark.parametrize(
+    "campo,valor_invalido",
+    [
+        ("hora_transacao", 25),
+        ("hora_transacao", -1),
+        ("tentativas_senha", 0),
+        ("valor_transacao", -50.0),
+    ],
+)
 def test_predict_campo_invalido_retorna_422(client, campo, valor_invalido):
     payload = {**PAYLOAD_VALIDO, campo: valor_invalido}
     response = client.post("/ml/predict", json=payload)
@@ -131,7 +135,7 @@ def test_modelo_distingue_casos_extremos(client):
         "hora_transacao": 13,
         "distancia_ultima_compra": 3.0,
         "tentativas_senha": 1,
-        "pais_diferente": 0
+        "pais_diferente": 0,
     }
 
     caso_suspeito = {
@@ -139,7 +143,7 @@ def test_modelo_distingue_casos_extremos(client):
         "hora_transacao": 2,
         "distancia_ultima_compra": 450.0,
         "tentativas_senha": 6,
-        "pais_diferente": 1
+        "pais_diferente": 1,
     }
 
     resp_tipico = client.post("/ml/predict", json=caso_tipico)
