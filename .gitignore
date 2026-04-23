@@ -1,0 +1,5 @@
+
+# arquivos sensiveis
+.env
+*.pkl
+aula_02_e03_mlops_dados_sinteticos/notebook/HF_login.ipynb
