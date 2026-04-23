@@ -8,7 +8,12 @@ router = APIRouter()
 pedidos = []
 
 
-@router.post("/", response_model=PedidoOutput, status_code=201)
+@router.get("/")
+async def listar_pedidos():
+    return pedidos
+
+
+@router.post("/", response_model=PedidoOutput)
 async def criar_pedido(pedido: PedidoInput):
     prato = next((p for p in pratos if p["id"] == pedido.prato_id), None)
 
@@ -21,15 +26,16 @@ async def criar_pedido(pedido: PedidoInput):
             detail=f"O prato '{prato['nome']}' não está disponível no momento"
         )
 
-    novo_id = len(pedidos) + 1
-    valor_total = prato["preco"] * pedido.quantidade
+    valor_unitario = prato["preco_promocional"] if prato.get("preco_promocional") else prato["preco"]
 
+    novo_id = len(pedidos) + 1
     novo_pedido = {
         "id": novo_id,
-        "prato_id": prato["id"],
+        "prato_id": pedido.prato_id,
         "nome_prato": prato["nome"],
         "quantidade": pedido.quantidade,
-        "valor_total": valor_total,
+        "valor_unitario": valor_unitario,
+        "valor_total": round(valor_unitario * pedido.quantidade, 2),
         "observacao": pedido.observacao
     }
 

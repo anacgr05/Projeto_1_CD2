@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -8,10 +8,11 @@ class Settings(BaseSettings):
     debug: bool = False
     max_mesas: int = 20
     max_pessoas_por_mesa: int = 10
-    hf_repo_id: str = "anacgr05/Projeto_1_CD2"
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8"
+    )
 
 
 settings = Settings()

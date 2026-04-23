@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class PedidoInput(BaseModel):
@@ -13,5 +14,6 @@ class PedidoOutput(BaseModel):
     prato_id: int
     nome_prato: str
     quantidade: int
+    valor_unitario: float
     valor_total: float
-    observacao: Optional[str] = None
+    observacao: Optional[str]
