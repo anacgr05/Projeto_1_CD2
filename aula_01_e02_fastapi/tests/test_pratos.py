@@ -65,7 +65,7 @@ def test_criar_prato_valido(client):
         "categoria": "massa",
         "preco": 49.9,
         "descricao": "Prato criado durante o teste",
-        "disponivel": True
+        "disponivel": True,
     }
     response = client.post("/pratos", json=novo_prato)
     assert response.status_code in [200, 201]
@@ -77,19 +77,18 @@ def test_criar_prato_valido(client):
 
 
 @pytest.mark.validacao
-@pytest.mark.parametrize("categoria_invalida", [
-    "esoterico",
-    "fastfood",
-    "japonesa",
-    "PIZZA",
-    "massa extra",
-])
+@pytest.mark.parametrize(
+    "categoria_invalida",
+    [
+        "esoterico",
+        "fastfood",
+        "japonesa",
+        "PIZZA",
+        "massa extra",
+    ],
+)
 def test_categoria_invalida_retorna_422(client, categoria_invalida):
-    prato = {
-        "nome": "Prato Teste",
-        "categoria": categoria_invalida,
-        "preco": 40.0
-    }
+    prato = {"nome": "Prato Teste", "categoria": categoria_invalida, "preco": 40.0}
     response = client.post("/pratos", json=prato)
     assert response.status_code == 422
 
@@ -97,22 +96,14 @@ def test_categoria_invalida_retorna_422(client, categoria_invalida):
 @pytest.mark.validacao
 @pytest.mark.parametrize("preco_invalido", [-1.0, -0.01, -100.0])
 def test_preco_invalido_retorna_422(client, preco_invalido):
-    prato = {
-        "nome": "Prato Teste",
-        "categoria": "pizza",
-        "preco": preco_invalido
-    }
+    prato = {"nome": "Prato Teste", "categoria": "pizza", "preco": preco_invalido}
     response = client.post("/pratos", json=prato)
     assert response.status_code == 422
 
 
 @pytest.mark.validacao
 def test_nome_curto_retorna_422(client):
-    prato = {
-        "nome": "AB",
-        "categoria": "pizza",
-        "preco": 30.0
-    }
+    prato = {"nome": "AB", "categoria": "pizza", "preco": 30.0}
     response = client.post("/pratos", json=prato)
     assert response.status_code == 422
 

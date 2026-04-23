@@ -15,7 +15,7 @@ reservas = [
         "pessoas": 4,
         "data_hora": "2026-07-25T20:00:00",
         "ativa": True,
-        "criada_em": "2026-07-23T10:00:00"
+        "criada_em": "2026-07-23T10:00:00",
     },
     {
         "id": 2,
@@ -24,8 +24,8 @@ reservas = [
         "pessoas": 6,
         "data_hora": "2025-04-26T19:30:00",
         "ativa": False,
-        "criada_em": "2025-04-23T10:10:00"
-    }
+        "criada_em": "2025-04-23T10:10:00",
+    },
 ]
 
 
@@ -43,7 +43,7 @@ async def criar_reserva(reserva: ReservaInput):
     if conflito:
         raise HTTPException(
             status_code=400,
-            detail=f"Mesa {reserva.mesa} já está reservada para {data_reserva}"
+            detail=f"Mesa {reserva.mesa} já está reservada para {data_reserva}",
         )
 
     nova_reserva = {
@@ -53,7 +53,7 @@ async def criar_reserva(reserva: ReservaInput):
         "pessoas": reserva.pessoas,
         "data_hora": reserva.data_hora.isoformat(),
         "ativa": True,
-        "criada_em": datetime.now().isoformat()
+        "criada_em": datetime.now().isoformat(),
     }
 
     reservas.append(nova_reserva)
@@ -69,7 +69,8 @@ async def listar_reservas(data: Optional[str] = None, apenas_ativas: bool = True
 
     if data:
         resultado = [
-            r for r in resultado
+            r
+            for r in resultado
             if datetime.fromisoformat(r["data_hora"]).date().isoformat() == data
         ]
 

@@ -23,10 +23,12 @@ async def criar_pedido(pedido: PedidoInput):
     if not prato["disponivel"]:
         raise HTTPException(
             status_code=400,
-            detail=f"O prato '{prato['nome']}' não está disponível no momento"
+            detail=f"O prato '{prato['nome']}' não está disponível no momento",
         )
 
-    valor_unitario = prato["preco_promocional"] if prato.get("preco_promocional") else prato["preco"]
+    valor_unitario = (
+        prato["preco_promocional"] if prato.get("preco_promocional") else prato["preco"]
+    )
 
     novo_id = len(pedidos) + 1
     novo_pedido = {
@@ -36,7 +38,7 @@ async def criar_pedido(pedido: PedidoInput):
         "quantidade": pedido.quantidade,
         "valor_unitario": valor_unitario,
         "valor_total": round(valor_unitario * pedido.quantidade, 2),
-        "observacao": pedido.observacao
+        "observacao": pedido.observacao,
     }
 
     pedidos.append(novo_pedido)

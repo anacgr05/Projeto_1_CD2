@@ -16,7 +16,7 @@ pratos = [
         "preco_promocional": None,
         "descricao": "Pizza Clássica Portuguesa",
         "disponivel": True,
-        "criado_em": "2024-01-01T00:00:00"
+        "criado_em": "2024-01-01T00:00:00",
     },
     {
         "id": 2,
@@ -26,7 +26,7 @@ pratos = [
         "preco_promocional": None,
         "descricao": "Massa ao sugo",
         "disponivel": True,
-        "criado_em": "2024-01-01T00:00:00"
+        "criado_em": "2024-01-01T00:00:00",
     },
     {
         "id": 3,
@@ -36,8 +36,8 @@ pratos = [
         "preco_promocional": None,
         "descricao": "Sobremesa de pudim",
         "disponivel": True,
-        "criado_em": "2024-01-01T00:00:00"
-    }
+        "criado_em": "2024-01-01T00:00:00",
+    },
 ]
 
 
@@ -45,7 +45,7 @@ pratos = [
 async def listar_pratos(
     categoria: Optional[str] = None,
     preco_maximo: Optional[float] = None,
-    apenas_disponiveis: bool = False
+    apenas_disponiveis: bool = False,
 ):
     resultado = pratos
 
@@ -69,13 +69,12 @@ async def buscar_prato(prato_id: int, formato: str = "completo"):
                 return {
                     "nome": prato["nome"],
                     "preco": prato["preco"],
-                    "preco_promocional": prato["preco_promocional"]
+                    "preco_promocional": prato["preco_promocional"],
                 }
             return prato
 
     raise HTTPException(
-        status_code=404,
-        detail=f"Prato com id {prato_id} não encontrado"
+        status_code=404, detail=f"Prato com id {prato_id} não encontrado"
     )
 
 
@@ -85,7 +84,7 @@ async def criar_prato(prato: PratoInput):
     novo_prato = {
         "id": novo_id,
         "criado_em": datetime.now().isoformat(),
-        **prato.model_dump()
+        **prato.model_dump(),
     }
     pratos.append(novo_prato)
     return novo_prato
@@ -110,19 +109,15 @@ async def aplicar_desconto(prato_id: int, percentual: float):
 
     if percentual <= 0 or percentual > 50:
         raise HTTPException(
-            status_code=400,
-            detail="Percentual de desconto deve estar entre 1% e 50%"
+            status_code=400, detail="Percentual de desconto deve estar entre 1% e 50%"
         )
 
     if not prato["disponivel"]:
         raise HTTPException(
             status_code=400,
-            detail="Não é possível aplicar desconto em prato indisponível"
+            detail="Não é possível aplicar desconto em prato indisponível",
         )
 
     prato["preco_promocional"] = round(prato["preco"] * (1 - percentual / 100), 2)
 
-    return {
-        "mensagem": "Desconto aplicado com sucesso",
-        "prato": prato
-    }
+    return {"mensagem": "Desconto aplicado com sucesso", "prato": prato}

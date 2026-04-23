@@ -8,17 +8,38 @@ from models.bebida import BebidaInput, BebidaOutput
 router = APIRouter()
 
 bebidas = [
-    {"id": 1, "nome": "Água Mineral", "tipo": "agua", "preco": 6.0, "alcoolica": False, "volume_ml": 500, "criado_em": "2026-04-20T12:00:00"},
-    {"id": 2, "nome": "Coca Cola", "tipo": "refrigerante", "preco": 8.0, "alcoolica": False, "volume_ml": 350, "criado_em": "2026-04-20T12:00:00"},
-    {"id": 3, "nome": "Suco de Laranja", "tipo": "suco", "preco": 10.0, "alcoolica": False, "volume_ml": 300, "criado_em": "2026-04-20T12:00:00"}
+    {
+        "id": 1,
+        "nome": "Água Mineral",
+        "tipo": "agua",
+        "preco": 6.0,
+        "alcoolica": False,
+        "volume_ml": 500,
+        "criado_em": "2026-04-20T12:00:00",
+    },
+    {
+        "id": 2,
+        "nome": "Coca Cola",
+        "tipo": "refrigerante",
+        "preco": 8.0,
+        "alcoolica": False,
+        "volume_ml": 350,
+        "criado_em": "2026-04-20T12:00:00",
+    },
+    {
+        "id": 3,
+        "nome": "Suco de Laranja",
+        "tipo": "suco",
+        "preco": 10.0,
+        "alcoolica": False,
+        "volume_ml": 300,
+        "criado_em": "2026-04-20T12:00:00",
+    },
 ]
 
 
 @router.get("/")
-async def listar_bebidas(
-    tipo: Optional[str] = None,
-    alcoolica: Optional[bool] = None
-):
+async def listar_bebidas(tipo: Optional[str] = None, alcoolica: Optional[bool] = None):
     resultado = bebidas
 
     if tipo:
@@ -37,8 +58,7 @@ async def buscar_bebida(bebida_id: int):
             return bebida
 
     raise HTTPException(
-        status_code=404,
-        detail=f"Bebida com id {bebida_id} não encontrada"
+        status_code=404, detail=f"Bebida com id {bebida_id} não encontrada"
     )
 
 
@@ -48,7 +68,7 @@ async def criar_bebida(bebida: BebidaInput):
     nova_bebida = {
         "id": novo_id,
         "criado_em": datetime.now().isoformat(),
-        **bebida.model_dump()
+        **bebida.model_dump(),
     }
     bebidas.append(nova_bebida)
     return nova_bebida

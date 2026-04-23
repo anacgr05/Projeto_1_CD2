@@ -1,9 +1,5 @@
 def test_criar_pedido_com_prato_existente(client):
-    payload = {
-        "prato_id": 1,
-        "quantidade": 2,
-        "observacao": "sem cebola"
-    }
+    payload = {"prato_id": 1, "quantidade": 2, "observacao": "sem cebola"}
     response = client.post("/pedidos", json=payload)
     assert response.status_code in [200, 201]
     dados = response.json()
