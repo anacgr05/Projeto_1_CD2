@@ -24,13 +24,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r aula_01_e02_fastapi/requirements.txt
 
-      - name: Iniciar a API em background
+      - name: Rodar testes
         run: |
           cd aula_01_e02_fastapi
-          python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
-          sleep 5
-
-      - name: Verificar que a API responde
-        run: |
-          curl --fail http://localhost:8000/
-          echo "API respondeu com sucesso"
+          pytest tests/ -v --tb=short
