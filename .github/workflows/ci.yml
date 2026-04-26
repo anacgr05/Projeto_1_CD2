@@ -33,9 +33,9 @@ jobs:
           pip list
 
           echo "=== Arquivos do projeto ==="
-          test -f aula_01_e02_fastapi/main.py          && echo "main.py"          || echo "main.py ausente"
-          test -f aula_01_e02_fastapi/requirements.txt && echo "requirements.txt" || echo "requirements.txt ausente"
-          test -d aula_01_e02_fastapi/tests            && echo "tests/"           || echo " tests/ ausente"
+          test -f aula_01_e02_fastapi/main.py          && echo "✅ main.py"          || echo "❌ main.py ausente"
+          test -f aula_01_e02_fastapi/requirements.txt && echo "✅ requirements.txt" || echo "❌ requirements.txt ausente"
+          test -d aula_01_e02_fastapi/tests            && echo "✅ tests/"           || echo "❌ tests/ ausente"
 
       - name: Verificar formatação
         run: |
@@ -83,13 +83,13 @@ jobs:
           python --version
 
           echo "=== Arquivos do projeto ==="
-          test -f aula_01_e02_fastapi/model_utils.py && echo " model_utils.py" || echo " model_utils.py ausente"
+          test -f aula_01_e02_fastapi/model_utils.py && echo "✅ model_utils.py" || echo "❌ model_utils.py ausente"
 
           echo "=== Autenticação ==="
           if [ -n "$HF_TOKEN" ]; then
-            echo " HF_TOKEN definido"
+            echo "✅ HF_TOKEN definido"
           else
-            echo " HF_TOKEN ausente"
+            echo "❌ HF_TOKEN ausente"
           fi
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
