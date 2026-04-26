@@ -26,16 +26,16 @@ jobs:
 
       - name: Diagnóstico do ambiente
         run: |
-          echo " Python "
+          echo "=== Python ==="
           python --version
 
-          echo " Dependências instaladas "
+          echo "=== Dependências instaladas ==="
           pip list
 
-          echo " Arquivos do projeto "
+          echo "=== Arquivos do projeto ==="
           test -f aula_01_e02_fastapi/main.py          && echo "main.py"          || echo "main.py ausente"
           test -f aula_01_e02_fastapi/requirements.txt && echo "requirements.txt" || echo "requirements.txt ausente"
-          test -d aula_01_e02_fastapi/tests            && echo "tests/"           || echo "tests/ ausente"
+          test -d aula_01_e02_fastapi/tests            && echo "tests/"           || echo " tests/ ausente"
 
       - name: Verificar formatação
         run: |
@@ -50,12 +50,12 @@ jobs:
       - name: Rodar testes smoke
         run: |
           cd aula_01_e02_fastapi
-          pytest tests/ -m "smoke or validacao" -v --tbshort
+          pytest tests/ -m "smoke or validacao" -v --tb=short
 
   integracao:
     runs-on: ubuntu-latest
     needs: qualidade
-    if: github.event_name  'push' && github.ref  'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Baixar o código
@@ -79,13 +79,13 @@ jobs:
 
       - name: Diagnóstico do ambiente
         run: |
-          echo " Python "
+          echo "=== Python ==="
           python --version
 
-          echo " Arquivos do projeto "
+          echo "=== Arquivos do projeto ==="
           test -f aula_01_e02_fastapi/model_utils.py && echo " model_utils.py" || echo " model_utils.py ausente"
 
-          echo " Autenticação "
+          echo "=== Autenticação ==="
           if [ -n "$HF_TOKEN" ]; then
             echo " HF_TOKEN definido"
           else
@@ -102,7 +102,7 @@ jobs:
       - name: Rodar testes de integração
         run: |
           cd aula_01_e02_fastapi
-          pytest tests/test_modelo.py -m integracao -v --tbshort
+          pytest tests/test_modelo.py -m integracao -v --tb=short
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           HF_REPO_ID: anaclaragr05/mlops-fraud-v1
