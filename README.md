@@ -1,6 +1,6 @@
-# Projeto_1_CD2
+# Projeto 1 - Ciência de Dados 2
 
-Este repositório reúne a implementação progressiva das atividades desenvolvidas ao longo dos cadernos da disciplina.  
+Este repositório é a realização das atividades desenvolvidas ao longo dos cadernos da disciplina.  
 O projeto foi organizado de forma evolutiva, transformando os exercícios em uma base prática de desenvolvimento com:
 
 - **FastAPI**
@@ -8,20 +8,18 @@ O projeto foi organizado de forma evolutiva, transformando os exercícios em uma
 - **Pytest**
 - **GitHub Actions**
 - **dados sintéticos**
-- **treinamento e serialização de modelo**
+- **treinamento de modelo**
 - **integração com Hugging Face Hub**
 - **CI com testes automatizados**
-
-A ideia central foi sair de exercícios isolados em notebook e construir uma solução estruturada, versionada e validada automaticamente.
 
 ---
 
 # Visão geral do projeto
 
-A evolução do projeto seguiu três grandes etapas:
+Etapas:
 
-## 1. Aula 1 — API com FastAPI
-Na primeira etapa, foi construída a API do restaurante fictício **Bella Tavola**, com rotas para pratos, bebidas, pedidos e reservas.
+## 1. e02 ( aula 1 ) - API com FastAPI
+Na primeira etapa, foi construída a API do restaurante **Bella Tavola**, com rotas para pratos, bebidas, pedidos e reservas.
 
 Nessa fase, os principais conceitos trabalhados foram:
 
@@ -34,17 +32,17 @@ Nessa fase, os principais conceitos trabalhados foram:
 - tratamento de erros com `HTTPException`
 - organização modular com `routers/` e `models/`
 
-## 2. Aula 2 — Dados sintéticos e serving de modelo
+## 2. e03 (aula 2) Dados sintéticos e modelo
 Na segunda etapa, o foco foi construir um mini fluxo de **MLOps**, incluindo:
 
 - geração de dados sintéticos
 - treino de modelo de classificação
 - serialização em `model.pkl`
 - publicação no Hugging Face Hub
-- carregamento remoto do modelo
+- carregamento do modelo
 - serving via API
 
-## 3. Aula 3 — CI, testes automatizados e integração com modelo
+## 3. e04 (aula 3,4e 5) - CI, testes automatizados e integração com modelo
 Na terceira etapa, o projeto evoluiu para práticas de engenharia de software mais robustas, incluindo:
 
 - GitHub Actions
