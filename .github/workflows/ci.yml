@@ -41,22 +41,14 @@ jobs:
         run: |
           cd aula_01_e02_fastapi
           python -m black --version
-          python - <<'PY'
-from pathlib import Path
-p = Path("tests/conftest.py")
-print("Arquivo:", p)
-print("Existe:", p.exists())
-print("Tamanho em bytes:", len(p.read_bytes()))
-print("Conteudo repr:")
-print(repr(p.read_text()))
-PY
+          python -c "from pathlib import Path; p = Path('tests/conftest.py'); print('Arquivo:', p); print('Existe:', p.exists()); print('Tamanho em bytes:', len(p.read_bytes())); print('Conteudo repr:'); print(repr(p.read_text()))"
 
-      - name: Verificar formatação
+      - name: Verificar formatacao
         run: |
           cd aula_01_e02_fastapi
           python -m black --check .
 
-      - name: Verificar imports não utilizados
+      - name: Verificar imports nao utilizados
         run: |
           cd aula_01_e02_fastapi
           python -m autoflake --check --remove-all-unused-imports -r .
@@ -108,12 +100,12 @@ PY
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
-      - name: Verificar autenticação com Hugging Face
+      - name: Verificar autenticacao com Hugging Face
         run: python -c "import os; assert os.environ.get('HF_TOKEN'), 'HF_TOKEN nao configurado'"
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
-      - name: Rodar testes de integração
+      - name: Rodar testes de integracao
         run: |
           cd aula_01_e02_fastapi
           python -m pytest tests/test_modelo.py -m integracao -v --tb=short
